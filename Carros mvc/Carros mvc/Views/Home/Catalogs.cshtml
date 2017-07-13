@@ -1,0 +1,28 @@
+﻿@using Carros_mvc.Models
+@model CatalogsModel
+ @Layout = "~/Views/Shared/_Layout.cshtml";
+<!DOCTYPE html>
+<link rel="stylesheet" href="~/Content/TableStyle.css"/>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Каталоги</title>
+</head>
+<body>
+    <div>
+        <div class="mlbody w100" style="height:auto; margin-top: 100px">
+          
+          @foreach (KeyValuePair<string, List<CatalogsModel.Brand>> kvp in CatalogsModel.CatalogsDic)
+          {
+              if(kvp.Value.Count==0){continue;}
+             <p style="font-size: 15px">@kvp.Key</p><br/>
+              foreach (CatalogsModel.Brand brand in kvp.Value)
+              {
+                  @Html.ActionLink(String.Format("{0}", brand.Name), "Index", "Catalogs", new {link = brand.Link, name = brand.Name}, htmlAttributes: new { @class = "username"})
+                 
+              }
+          }
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+﻿@model Carros_mvc.Models.RegisterModel
+@{
+    ViewBag.Title = "Регистрация";
+}
+  
+
+<br/>
+<div align="left"  class="mlbody" style="float: left;margin-top: 50px">
+     <text style="font-size: 16px">Введите необходимые поля для регистрации:</text>
+    <link rel="stylesheet" href="~/Content/TableStyle.css"/>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+        <fieldset>
+            <legend>Регистрация</legend>
+            <ol>
+                <li>
+                    <div align="left">      @Html.LabelFor(m => m.UserName)
+                        @Html.TextBoxFor(m => m.UserName,htmlAttributes: new {@class="input_field"} )</div>
+                </li>
+            
+                <li>
+                    <div align="left">     @Html.LabelFor(m => m.LastName)
+                        @Html.TextBoxFor(m => m.LastName,htmlAttributes: new {@class="input_field"})</div>
+                </li>
+                <li>
+                    <div align="left">     @Html.LabelFor(m => m.FirstName)
+                        @Html.TextBoxFor(m => m.FirstName,htmlAttributes: new {@class="input_field"})</div>
+                </li>
+            
+                <li>
+                    <div align="left">     @Html.LabelFor(m => m.Patronymic)
+                        @Html.TextBoxFor(m => m.Patronymic,htmlAttributes: new {@class="input_field"})</div>
+                </li>
+                <li>
+                    <div align="left">   @Html.LabelFor(m => m.Password)
+                        @Html.PasswordFor(m => m.Password,htmlAttributes: new {@class="input_field"})</div>
+                </li>
+                <li>
+                    <div align="left">  @Html.LabelFor(m => m.ConfirmPassword)
+                        @Html.PasswordFor(m => m.ConfirmPassword,htmlAttributes: new {@class="input_field"})</div>
+                </li>
+            </ol>
+         
+        </fieldset>
+       <div align="left"> <button type="submit" class="submit">Регистрация</button><br/></div>
+    }
+     
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

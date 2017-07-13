@@ -1,0 +1,172 @@
+﻿@using Carros_mvc.Models
+<!DOCTYPE html>
+@model AdminModel
+ <link rel="stylesheet" href="~/Content/TableStyle.css"/>
+<html>
+    <head><title>Панель администратора</title></head>
+    <body>
+        <div style="margin-top: 50px" class="w90 mlbody" >
+            @using (Html.BeginForm("ManageAccount", "Account", FormMethod.Post))
+            {<div>
+                    <button  type="submit" value="basket" name ="myBasket" class="submit menu_button_style" >Корзина</button>
+                    <button  type="submit" value="usrParameters" name ="myParameters" class="submit menu_button_style" style="width: 130px">Мои настройки</button>
+              </div>
+            }
+            @if (@Model.isAdmin == 1)
+            {
+                using (Html.BeginForm("ManageAdminAccount", "Account", FormMethod.Post))
+                {
+                    <div>
+                  <button  type="submit" value="Пользователи" name ="usrParameter" class="submit menu_button_style" >Пользователи</button>
+                        <button  type="submit" value="Наценки" name ="comission" class="submit menu_button_style">Наценки</button>
+                        <button  type="submit" value="Каталоги" name ="catalogs" class="submit menu_button_style">Каталоги</button>
+                        </div>
+                  <br />
+                }
+            
+            }
+            <br/>
+            @if (Model != null)
+            {
+                if (Model.SelectedUsers)
+                {
+                       <div style="float: right; font-size: 30px;color: #e2e2e2">Пользователи</div>   
+                        <table id="usrsTable"  class="table">
+                            <tr>
+                                <th class="mainth" style="width: 50px;">п\п</th>
+                                <th class="mainth" align="center" >E-Mail</th>
+                                <th class="mainth" align="center" >Имя</th>
+                                <th class="mainth" align="center" >Фамилия</th>
+                                <th class="mainth" align="center" >Отчество</th>
+                                <th class="mainth" align="center" >Дата регистрации</th>
+                                <th class="mainth" align="center" >Дата последнего входа</th>
+                                <th class="mainth" align="center" >Права админа</th>
+                            </tr>
+                      
+                            @for (int i = 0; i < AdminModel.DataBaseUserList.Count; i++)
+                            {
+                                using (Html.BeginForm("ManageAdminAccount", "Account", FormMethod.Post))
+                                {
+
+                                    <tr>
+                                        <input type="hidden" name="userName" value="@AdminModel.DataBaseUserList[i].UserName" />
+                                        <input type="hidden" name="firstName" value="@AdminModel.DataBaseUserList[i].FirstName" />
+                                        <input type="hidden" name="LastName" value="@AdminModel.DataBaseUserList[i].LastName" />
+                                        <input type="hidden" name="Patronymic" value="@AdminModel.DataBaseUserList[i].Patronymic" />
+                                        <input type="hidden" name="RegisterDate" value="@AdminModel.DataBaseUserList[i].RegisterDate" />
+                                        <input type="hidden" name="LastConnection" value="@AdminModel.DataBaseUserList[i].LastConnection" />
+                                        <input type="hidden" name="IsAdmin" value="@AdminModel.DataBaseUserList[i].IsAdmin" />
+                               
+                                        <td class="td maintd"  name="index-@i">@(i + 1)</td>
+                                        <td class="maintd"  name="firstName-@i"  style="width: 300px;">@AdminModel.DataBaseUserList[i].UserName</td>
+                                        <td class="maintd" id="firstName-@i" style="width: 300px;">@AdminModel.DataBaseUserList[i].FirstName</td>
+                                        <td class="maintd" id="LastName-@i"  style="width: 300px;">@AdminModel.DataBaseUserList[i].LastName</td>
+                                        <td class="maintd" id="Patronymic-@i"    style="width: 300px;">@AdminModel.DataBaseUserList[i].Patronymic</td>
+                                        <td class="maintd" id="RegisterDate-@i"  style="width: 300px;">@AdminModel.DataBaseUserList[i].RegisterDate</td>
+                                        <td class="maintd" id="LastConnection-@i"  style="color: blue; width: 100px;">@AdminModel.DataBaseUserList[i].LastConnection</td>
+                                        <td class="maintd" id="IsAdmin-@i"  style="width: 300px;">@AdminModel.DataBaseUserList[i].IsAdmin</td>
+                                    </tr>
+                                }
+                            }
+                        </table> <br/>
+                        <button id="SaveUsers" style="float: right" type="submit" value="Пользователи" name ="usrParameter" class="submit menu_button_style" >Сохранить</button>
+                        using (Html.BeginForm("LoadAdminParameters", "Account", FormMethod.Post))
+                        {
+
+                            <button id="usersValue" name="parameters" style="visibility: hidden" value="" ></button>
+                        }
+                        <br/>
+                   
+                }
+                if (Model.SelectedComissions)
+                {
+                     <div style="float: right; font-size: 30px;color: #e2e2e2">Наценки</div>   
+                    <table  name="editableTable" class="table" align="center" width="77%">
+                            <tr>
+                                <th class="mainth" style="width: 50px;">п\п</th>
+                                <th class="mainth" align="center" >От</th>
+                                <th class="mainth" align="center" >До</th>
+                                <th class="mainth" align="center" >Значение</th>
+                                <th class="mainth" align="center" >Тип</th>
+                            </tr>
+                      
+                            @for (int i = 0; i < AdminModel.ComissionList.Count; i++)
+                            {
+                                using (Html.BeginForm("ManageAdminAccount", "Account", FormMethod.Post))
+                                {
+                                    string type = "%";
+                                    if (@AdminModel.ComissionList[i].Type != 1)
+                                    {
+                                        type = "руб";
+                                    }
+                                    <tr>
+                                        <input type="hidden" name="index" value="@AdminModel.ComissionList[i].Index" />
+                                        <input type="hidden" name="from" value="@AdminModel.ComissionList[i].From" />
+                                        <input type="hidden" name="to" value="@AdminModel.ComissionList[i].To" />
+                                        <input type="hidden" name="value" value="@AdminModel.ComissionList[i].Value" />
+                                        <input type="hidden" name="type" value="@AdminModel.ComissionList[i].Type" />
+                             
+                                        
+                                        <td class="maintd"    name="index-@i">@AdminModel.ComissionList[i].Index</td>
+                                        <td class="edit maintd" name="from-@i" style="width: 300px;">@AdminModel.ComissionList[i].From</td>
+                                        <td class="edit maintd" name="to-@i" style="width: 300px;">@AdminModel.ComissionList[i].To</td>
+                                        <td class="edit maintd" name="value-@i"  style="width: 300px;">@AdminModel.ComissionList[i].Value</td>
+                                        <td class="edit maintd" name="type-@i"    style="width: 300px;">@type</td>
+                                    </tr>
+                                }
+                            }
+                        </table>
+                    <br/>
+                    <button id="SaveComissions" style="float: right" type="submit" value="Пользователи" name ="usrParameter" class="submit menu_button_style" >Сохранить</button>
+                    <button name="addRow" style="float: right" type="submit" value="add" name ="saveCatalogs" class="submit menu_button_style" >Добавить</button>
+                    using (Html.BeginForm("LoadAdminParameters", "Account", FormMethod.Post))
+                    {
+                        <button id="comissionValue" name="parameters" style="visibility: hidden" value="" ></button>
+                    }
+                }
+                
+                if (Model.SelectedCatalogs)
+                {
+                     <div style="float: right; font-size: 30px;color: #e2e2e2">Каталоги</div>   
+                 
+                        <table name="editableTable" id="catalogsTable" class="table" align="center" width="77%">
+                            <tr>
+                                <th class="mainth" style="width: 10px;text-align: center">п\п</th>
+                                <th class="mainth" style="width: 100px;text-align: center">Бренд</th>
+                                <th class="mainth" style="text-align: center" >Путь к каталогу</th>
+                                <th class="mainth" align="center" ></th>
+                            </tr>
+                      
+                            @for (int i = 0; i < AdminModel.CatalogList.Count; i++)
+                            {
+                               
+                                    <tr>
+                                        <td class="maintd" name="index-@i">@(i+1)</td>
+                                        <td class="edit maintd" name="name-@i" style="width: 300px;">@AdminModel.CatalogList[i].Name</td>
+                                        <td class="edit maintd" name="link-@i" style="width: 300px;">@AdminModel.CatalogList[i].Link</td>
+                                        <td  id="@i-rem" class="maintd" style="width: 15px"><input name="removebtn" id="@i" type="submit" value="-"/></td>
+                                    </tr>
+                                
+                            }
+                        </table>
+                    <br/>
+                    <button id="SaveCatalogs" style="float: right" type="submit" value="save" name ="saveCatalogs" class="submit menu_button_style" >Сохранить</button>
+                    <button name="addRow" style="float: right" type="submit" value="add" name ="addCatalog" class="submit menu_button_style" >Добавить</button>
+                   
+                    using (Html.BeginForm("LoadAdminParameters", "Account", FormMethod.Post))
+                    {
+                        <button id="CatalogsValue" name="parameters" style="visibility: hidden" value="" ></button>
+                    }
+                }
+                
+            }
+        </div>
+          @if (@Model.isAdmin == 1)
+          {
+        <script src="~/Scripts/tablescript.js"></script>
+        <script src="~/Scripts/senduiscript.js"></script>
+        <script src="~/Scripts/addrowtotablescript.js"></script>
+        <script src="~/Scripts/savecatalogsscript.js"></script>
+          }
+    </body>
+</html>

@@ -1,0 +1,46 @@
+﻿@model Carros_mvc.Models.LoginModel
+
+<section id="loginForm" class="mlbody" style="float:left;width: 30%;margin-top:10%">
+    <h2>Введите Логин и пароль для авторизации</h2>
+    @using (Html.BeginForm(new {ReturnUrl = ViewBag.ReturnUrl}))
+    {
+        <link rel="stylesheet" href="~/Content/TableStyle.css"/>
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>Авторизация</legend>
+            <ol>
+                <li>
+                    <div align="left">  @Html.LabelFor(m => m.UserName)
+                        @Html.TextBoxFor(m => m.UserName,htmlAttributes: new {@class="input_field"})
+                        @Html.ValidationMessageFor(m => m.UserName)
+                    </div>
+                </li>
+                <li>
+                    <div align="left">   @Html.LabelFor(m => m.Password)
+                        @Html.PasswordFor(m => m.Password,htmlAttributes: new {@class="input_field"})
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </div>
+                </li>
+                <li>
+                    <div align="left">  @Html.CheckBoxFor(m => m.RememberMe)
+                        @Html.LabelFor(m => m.RememberMe, new {@class = "checkbox"})</div>
+                </li>
+            </ol>
+            <button type="submit" style="float: left" class="submit">Войти</button>
+        </fieldset>
+        <p>
+            @Html.ActionLink("Регистрация", "Register") если вы еще не зарегистрированы.
+        </p>
+    }
+       </section>
+
+<section style="float:left;height: 10%;width: 20%;margin-top:10%" id="socialLoginForm">
+    <h2>Использовать другой способ авторизации:</h2>
+    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
+</section>
+ <script src="~/Scripts/loginscripts.js"></script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

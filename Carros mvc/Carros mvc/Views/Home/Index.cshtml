@@ -1,0 +1,149 @@
+﻿@{
+    ViewBag.Title = "CARROSS";
+}
+@using System.Globalization
+@using Carros_mvc
+@using Carros_mvc.Models
+@using Carros_mvc.ru.avtoto.www
+@using Microsoft.Ajax.Utilities
+@model Carros_mvc.Models.DetailModels
+<link rel="stylesheet" href="~/Content/TableStyle.css"/>
+
+@section featured {
+
+    <head>
+        <title></title>
+     </head>
+    <body style="overflow: auto">
+         
+        <div id="backgroundpanel" style="display: none; height: 12000px; width: 1200px;z-index: 100 "></div>
+        <div id="basketwindow" class="dialog" style="display: none">
+         <div style="width: 100%;height: 20px;margin-top: -40px"><p style="margin-left: 30%;font-size: 20px;color: #00bfff">Добавление в корзину</p></div><br/>
+            <table style="width: 100%;overflow: auto">
+                <tr class="basketd">
+                    <th style="text-align: center">Название:</th>
+                    <th class="textctr" id="namebskt"></th>
+                </tr>
+                <tr class="basketd">
+                    <th style="text-align: center">Производитель:</th>
+                    <th class="textctr" id="manufbskt"></th>
+                </tr>
+                 <tr class="basketd">
+                    <th style="text-align: center">Код:</th>
+                    <th class="textctr" id="codebskt"></th>
+                </tr>
+                <tr class="basketd">
+                    <th style="text-align: center">Количество:</th>
+                    <th class="textctr"><input id="countbskt" type="text" style="background: #D8E6F3;width: 30px"/></th>
+                </tr>
+                <tr class="basketd">
+                    <th style="text-align: center">Сумма:</th>
+                    <th class="textctr" id="pricebskt"></th>
+                </tr>
+            </table><br/><br/>
+            <div style="border: 0 solid">
+                <button type="submit" id="submitaddtobasket" class="submit" style="margin-left: 30%">Добавить</button>
+                <button type="submit" id="canceladdtobasket" class="submit" style="margin-left: 10%">Отмена</button>
+            </div>
+               <p style="display: none" id="baskHash"></p>
+        </div>
+
+        
+        <div style="margin-top: 50px; overflow-y: auto;" class="mlbody w90 fl">
+            @using (Html.BeginForm("AddDetailModels", "Home", FormMethod.Post))
+            {
+                <input  id="parameters" type="submit" style="visibility: hidden" name="parameters" value="" />
+            }   
+            @if (Model != null && @Model.SortedDetails != null && @Model.SortedDetails.Count > 0)
+            {
+                <div><p style="font-size: 20px">Список товаров по номеру @Model.MaintTextBox</p></div>
+                <div id="sortManuf" class="sortManuf"><span style="margin-left: 3px">Все производители</span> <img src="~/Content/images/split.png"/></div><div id="filtdv" style="display: none"><a id="filter" style="color: silver; font-size: 12px"></a><button id="submitfltrbtn" class="submit">Применить</button></div>
+                <div id="brandDiv" style="display: none" class="brandsarea" >
+              
+                    @using (new AvtoTOService())
+                    {
+                        <div class="brandItem"> <input type="checkbox" name="cbx" value="#all"/><a style="background-color: lightgoldenrodyellow" id="all">Все производители</a></div>
+                        foreach (KeyValuePair<string, List<Parameters.DetailInfo>> di in Model.SortedDetails)
+                        {
+                            if (di.Value[0].Code == Model.MaintTextBox)
+                            {
+                                <div class="brandItem"> <input type="checkbox" name="cbx" value="@di.Key"/><a style="background-color: lightgoldenrodyellow" id="@di.Key">@di.Key (от @di.Value[0].Price руб.)</a></div>
+                            }
+                            else
+                            {
+                                <div class="brandItem"> <input type="checkbox" name="cbx" value="@di.Key"/><a id="@di.Key">@di.Key (от @di.Value[0].Price руб.)</a></div>
+                            }
+
+                        }
+                    }
+
+                </div>
+                string sid = "";
+                <table id="detailsTable" class="table">
+                    <tr>
+                        <th class="mainth" style="width: 25px;">п\п</th>
+                        <th  class="mainth">Название</th>
+                        <th class="mainth">Производитель</th>
+                        <th class="mainth" >Срок доставки</th>
+                        <th class="mainth" >Склад</th>
+                        <th class="mainth" >Цена(руб.)</th>
+                        @if (Request.IsAuthenticated)
+                        {
+                            Response.Cookies.Add(new HttpCookie("Aurh", "1"));
+                            if (Model.isAdmin == 1)
+                            {
+                                <th class="mainth" align="center">Цена поставщика</th>
+                            }
+                                <th class="mainth" align="center" style="width: 100px;"></th>
+                        }
+                        else
+                        {
+                            Response.Cookies.Remove("Aurh");
+                        }
+            
+                    </tr>
+               
+          
+                    @using (new AvtoTOService())
+                    {
+                        int i = 0;
+
+                        foreach (KeyValuePair<string, List<Parameters.DetailInfo>> detail in Model.SortedDetails)
+                        {
+                            sid = detail.Value[0].SearchID;
+                            <tr>
+                                <td style="width: 15px" class="maintd" name="intex-@i">@(i + 1)</td>
+                                <td class="maintd" name="detName" >@detail.Value[0].Name</td>
+                                <td class="maintd" name="detManuf" >@detail.Key</td>
+                                <td class="maintd" name="detDelivery">@detail.Value[0].Delivery</td>
+                                <td class="maintd" name="detStorage">@detail.Value[0].Storage</td>
+                                <td class="maintd" name="detPrice">@detail.Value[0].Price.ToString("N", new NumberFormatInfo() {CurrencyDecimalDigits = 2, CurrencyGroupSeparator = "."})</td>
+                                @if (Request.IsAuthenticated)
+                                {
+                                    if (Model.isAdmin == 1)
+                                    {
+                                        <td class="maintd" name="detRealPrice-@i"  style="color: blue; width: 100px;">@detail.Value[0].RealPrice.ToString("N", new NumberFormatInfo() {CurrencyDecimalDigits = 2, CurrencyGroupSeparator = "."})</td>
+                                    }
+                                    <td class="maintd">
+                                        <button name="tobasket" id="@detail.Value[0].Hash" type="submit" class="buttonCarrito" value="tobasket">в корзину</button>
+                                    </td>
+                                }
+                            </tr>
+                            i++;
+                        }
+                    }
+                </table><br/><br/>
+                <a id="reqid" style="display: none">@sid</a>
+            }
+            else if (Model.Details.Count == 0 && Model.startedFind)
+            {
+                <p style="font-size: 18px; margin-left: 20%">Извините, по Вашему запросу ничего не найдено </p>
+            }
+            <a id="params" style="display: none"></a>
+            <a id="searchCode" style="display: none">@Model.MaintTextBox</a>
+            <script src="~/Scripts/AddTobasketscript.js"></script>
+            <script src="~/Scripts/sortdetailsscript.js"></script>
+           </div>
+    </body>
+      
+}

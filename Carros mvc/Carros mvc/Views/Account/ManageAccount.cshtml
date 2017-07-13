@@ -1,0 +1,91 @@
+﻿@using System.Globalization
+@using Carros_mvc
+@using Carros_mvc.Models
+@model UserModel
+<!DOCTYPE html>
+<head><title>Личный кабинет</title></head>
+<body>
+     <div style="margin-top: 50px"  class="w90 mlbody" >
+        @using (Html.BeginForm("ManageAccount", "Account", FormMethod.Post))
+        {   
+            <div>
+               <button  type="submit" value="basket" name ="myBasket" class="submit menu_button_style" >Корзина</button>
+                <button  type="submit" value="usrParameters" name ="myParameters" class="submit menu_button_style" style="width: 130px" >Мои настройки</button>
+         </div>
+        }
+        @if (@Model!=null&& @Model.IsAdmin == 1)
+        {
+            using (Html.BeginForm("ManageAdminAccount", "Account", FormMethod.Post))
+            {
+               <div>
+                    <button  type="submit" value="Пользователи" name ="usrParameter" class="submit menu_button_style" >Пользователи</button>
+                    <button  type="submit" value="Наценки" name ="comission" class="submit menu_button_style">Наценки</button>
+                   <button  type="submit" value="Каталоги" name ="catalogs" class="submit menu_button_style">Каталоги</button><br />
+               </div>
+            }
+            
+        }
+        <br/>
+        @if (@Model != null&&Model.IsBasket)
+        {
+         <div style="float: right; font-size: 30px;color: #e2e2e2">Корзина</div>   
+             if (@Model.DetailsinBasket.Count > 0)
+                {
+                    <table id="editableTable" class="table">
+                        <tr class="">
+                            <th class="mainth textctr" style="width: 25px;">п\п</th>
+                            <th class="mainth textctr" align="center" >Код товара</th>
+                            <th  class="mainth textctr"  align="center">Название</th>
+                            <th class="mainth textctr"  align="center" >Производитель</th>
+                            <th class="mainth textctr" align="center">Склад</th>
+                            <th class="mainth textctr" align="center" >Кол-во</th>
+                            <th class="mainth textctr" align="center" >Цена(руб.)</th>
+                            <th class="mainth textctr" align="center" >Дата добавления</th>
+                            <th class="mainth textctr"  ></th>
+                        
+                        </tr>
+                       @using (Html.BeginForm("AddDetailModels", "Home", FormMethod.Post))
+                       {
+                           int i = 1;
+                           foreach (KeyValuePair<string, Parameters.DetailInfo> detail in Model.DetailsinBasket)
+                           {
+
+
+                               <tr>
+                                   <td style="width: 15px" class="maintd" name="intex-@i">@i</td>
+                                   <td class="maintd textctr" name="detCode-@i" >@detail.Value.Code</td>
+                                   <td class="maintd textctr" name="detName-@i" >@detail.Value.Name</td>
+                                   <td class="maintd textctr" name="detManuf-@i" >@detail.Value.Manuf</td>
+                                   <td class="maintd textctr" name="detStorage-@i">@detail.Value.Storage</td>
+                                   <td class="edit maintd textctr" name="detCount-@i">1</td>
+                                   <td class="maintd textctr" name="detPrice-@i">@detail.Value.Price.ToString("N", new NumberFormatInfo() {CurrencyDecimalDigits = 2, CurrencyGroupSeparator = "."})</td>
+                                   <td class="maintd textctr" name="detDate-@i">@detail.Value.DateofPlacetoBasket</td>
+                                   <td class="maintd textctr" name="detchecked-@i"><input name="det_selected-i" type="checkbox" class="buttonCarrito" /></td>
+                                   <td class="maintd textctr"style="visibility: hidden">@detail.Key</td>
+                               </tr>
+                               i++;
+                           }
+                       }
+                    </table>
+                    <br/>
+
+                    <div style="margin-left: auto">
+                        <button  type="submit"  value="Удалить" id ="RemoveDetailsDromBasket" class="submit menu_button_style" >Удалить</button>
+                        <button  type="submit" value="Оформить заказ" id ="placeOrder" class="submit menu_button_style" style="width: 130px">Оформить заказ</button>
+                    </div>
+                }
+                else
+                {
+                    <br /><p align="center" style="font-size: 14px;margin-top: 50px" >Ваша корзина пуста<br />Перейдите в раздел @Html.ActionLink("Поиск запчастей", "Index", "Home") для добавления товара в корзину.</p>
+                }
+
+            
+        }
+    </div>
+      @using (Html.BeginForm("LoadUserParameters", "Account", FormMethod.Post))
+                    {
+                        <button id="saveParameters" name="parameters" style="visibility: hidden" value="" ></button>
+                    }
+    <script src="~/Scripts/removeFromBasketscript.js"></script>
+    <script src="~/Scripts/tablescript.js"></script>
+</body>

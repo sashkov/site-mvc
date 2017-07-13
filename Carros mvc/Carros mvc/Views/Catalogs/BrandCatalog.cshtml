@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Каталог "+ Model.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    @model Carros_mvc.Models.BrandModel
+
+        }
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Каталог @Model.Name</title>
+</head>
+<body>
+    <div class="mlbody w90" style="margin-top: 100px;height: 100%;width: 70%"><iframe class="catalogBorder" name="CatalogFrame" src="@Model.Link"></iframe>  </div>
+</body>
+

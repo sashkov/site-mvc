@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.avtoto.ru/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://www.avtoto.ru/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.avtoto.ru/">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="SearchPartsRequest">
+    <wsdl:part name="request" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="SearchPartsResponse">
+    <wsdl:part name="responce" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="SearchStartRequest">
+    <wsdl:part name="request" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="SearchStartResponse">
+    <wsdl:part name="responce" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="SearchGetPartsRequest">
+    <wsdl:part name="request" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="SearchGetPartsResponse">
+    <wsdl:part name="responce" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="AddToBasketRequest">
+    <wsdl:part name="request" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="AddToBasketResponse">
+    <wsdl:part name="responce" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteFromBasketRequest">
+    <wsdl:part name="request" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteFromBasketResponse">
+    <wsdl:part name="responce" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCountInBasketRequest">
+    <wsdl:part name="request" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCountInBasketResponse">
+    <wsdl:part name="responce" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="CheckAvailabilityInBasketRequest">
+    <wsdl:part name="request" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="CheckAvailabilityInBasketResponse">
+    <wsdl:part name="responce" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="AddToOrdersFromBasketRequest">
+    <wsdl:part name="request" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="AddToOrdersFromBasketResponse">
+    <wsdl:part name="responce" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="GetOrdersStatusRequest">
+    <wsdl:part name="request" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="GetOrdersStatusResponse">
+    <wsdl:part name="responce" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="GetStatSearchRequest">
+    <wsdl:part name="request" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="GetStatSearchResponse">
+    <wsdl:part name="responce" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="GetBrandsByCodeRequest">
+    <wsdl:part name="request" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="GetBrandsByCodeResponse">
+    <wsdl:part name="responce" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:portType name="AvtoTOServicePortType">
+    <wsdl:operation name="SearchParts">
+      <wsdl:input message="tns:SearchPartsRequest" />
+      <wsdl:output message="tns:SearchPartsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchStart">
+      <wsdl:input message="tns:SearchStartRequest" />
+      <wsdl:output message="tns:SearchStartResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchGetParts">
+      <wsdl:input message="tns:SearchGetPartsRequest" />
+      <wsdl:output message="tns:SearchGetPartsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="AddToBasket">
+      <wsdl:input message="tns:AddToBasketRequest" />
+      <wsdl:output message="tns:AddToBasketResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFromBasket">
+      <wsdl:input message="tns:DeleteFromBasketRequest" />
+      <wsdl:output message="tns:DeleteFromBasketResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCountInBasket">
+      <wsdl:input message="tns:UpdateCountInBasketRequest" />
+      <wsdl:output message="tns:UpdateCountInBasketResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckAvailabilityInBasket">
+      <wsdl:input message="tns:CheckAvailabilityInBasketRequest" />
+      <wsdl:output message="tns:CheckAvailabilityInBasketResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="AddToOrdersFromBasket">
+      <wsdl:input message="tns:AddToOrdersFromBasketRequest" />
+      <wsdl:output message="tns:AddToOrdersFromBasketResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrdersStatus">
+      <wsdl:input message="tns:GetOrdersStatusRequest" />
+      <wsdl:output message="tns:GetOrdersStatusResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStatSearch">
+      <wsdl:input message="tns:GetStatSearchRequest" />
+      <wsdl:output message="tns:GetStatSearchResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBrandsByCode">
+      <wsdl:input message="tns:GetBrandsByCodeRequest" />
+      <wsdl:output message="tns:GetBrandsByCodeResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AvtoTOServiceBinding" type="tns:AvtoTOServicePortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="SearchParts">
+      <soap:operation soapAction="uri:avtoto/SearchParts" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="uri:avtoto" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="uri:avtoto" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchStart">
+      <soap:operation soapAction="uri:avtoto/SearchStart" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="uri:avtoto" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="uri:avtoto" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchGetParts">
+      <soap:operation soapAction="uri:avtoto/SearchGetParts" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="uri:avtoto" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="uri:avtoto" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddToBasket">
+      <soap:operation soapAction="uri:avtoto/AddToBasket" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="uri:avtoto" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="uri:avtoto" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFromBasket">
+      <soap:operation soapAction="uri:avtoto/DeleteFromBasket" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="uri:avtoto" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="uri:avtoto" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCountInBasket">
+      <soap:operation soapAction="uri:avtoto/UpdateCountInBasket" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="uri:avtoto" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="uri:avtoto" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckAvailabilityInBasket">
+      <soap:operation soapAction="uri:avtoto/CheckAvailabilityInBasket" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="uri:avtoto" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="uri:avtoto" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddToOrdersFromBasket">
+      <soap:operation soapAction="uri:avtoto/AddToOrdersFromBasket" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="uri:avtoto" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="uri:avtoto" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrdersStatus">
+      <soap:operation soapAction="uri:avtoto/GetOrdersStatus" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="uri:avtoto" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="uri:avtoto" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStatSearch">
+      <soap:operation soapAction="uri:avtoto/GetStatSearch" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="uri:avtoto" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="uri:avtoto" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBrandsByCode">
+      <soap:operation soapAction="uri:avtoto/GetBrandsByCode" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="uri:avtoto" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="uri:avtoto" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AvtoTOService">
+    <wsdl:port name="AvtoTOServicePort" binding="tns:AvtoTOServiceBinding">
+      <soap:address location="http://www.avtoto.ru/?soap_server=dotnet_mode&amp;version=2" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

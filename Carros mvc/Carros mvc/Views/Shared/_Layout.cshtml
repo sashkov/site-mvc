@@ -1,0 +1,102 @@
+﻿@using Carros_mvc.Models
+<!DOCTYPE html>
+<html lang="en">
+    <head >
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <link rel="stylesheet" href="~/Content/TableStyle.css"/>
+         @Styles.Render("~/Content/css")
+         @Scripts.Render("~/bundles/modernizr")
+     </head>
+    
+    <body onresize="onResize()" >
+       @if (Request.Browser.IsMobileDevice)
+        {
+             <script src="~/Scripts/checkMobilescript.js"></script>
+        }
+       <div id="image_bar" class="fix loginBar" >
+                <div id="login">
+                    <a href="/" style="background-color: rgb(64,199,256)"> <img id="main_logo" class="mainlogo" src="~/Content/images/Carros.png" /></a> 
+                    @if (Request.IsAuthenticated && Session[User.Identity.Name]!=null)
+                    {
+                                       
+                        <text>
+                            <div class="loginArea"> Здравствуйте, @Html.ActionLink(String.Format("{0}",(Session[User.Identity.Name] as UserModel).FirstName), "ManageAccount", "Account", new {myBasket = "basket"}, htmlAttributes: new { @class = "username", title = "Войти" })!
+                                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { @class = "username", id = "logoutForm" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <br /><a href="javascript:document.getElementById('logoutForm').submit()" class="username">Выйти</a>
+                                }
+                            </div>
+                        </text>
+                    }
+                    else
+                    {
+                        <div class="registerArea">
+                            <ul>
+                                <li>@Html.ActionLink("Регистрация", "Register", "Account", routeValues: null, htmlAttributes: new { @class = "username", id = "registerLink" })</li>
+                                <li>@Html.ActionLink("Войти", "Login", "Account", routeValues: null, htmlAttributes: new { @class = "username", id = "loginLink" })</li>
+                            </ul>
+                        </div>
+                    }
+                </div>
+                @using (Html.BeginForm("StartFind", "Home", FormMethod.Post))
+           {
+               string maintext = "";
+               if (Session[User.Identity.Name] != null && (Session[User.Identity.Name] as UserModel).MainTextBox != string.Empty)
+               {
+                   maintext = (Session[User.Identity.Name] as UserModel).MainTextBox;
+               }
+               <div id="maininput" class="maininput">
+                   <input name="mainTextBox" class="main_textbox" value="@maintext" id="mainTextBox" type="text" /><button id='startfind' class="submit" name="action" value="runFind" style="height: 30px">Поиск</button><br/>
+               </div>
+        }
+            </div>
+          <div id="navigate" class="title fix" style="margin-left: 10%"><br/>
+                @Html.ActionLink("Поиск запчастей", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "navigateLink", })<br/>
+                @Html.ActionLink("Каталоги", "Catalogs", "Home", routeValues: null, htmlAttributes: new { @class = "navigateLink", })<br/>
+                @if (Request.IsAuthenticated)
+                {
+                    if (Session[User.Identity.Name] != null)
+                    {
+                        <br/>
+                        @Html.ActionLink(String.Format("Корзина {0}", (Session[User.Identity.Name] as UserModel).detailsHashes.Count), "ManageAccount", "Account", new {myBasket = "basket"},htmlAttributes: new { id = "basket", @class = "navigateLink" });
+                    }
+                }
+            </div>
+        
+    <div id="bodyArea" style="width: 100%; min-height:400px;background-color: white">
+                @RenderSection("featured", required: false)
+                <section >
+                    <br/><br/>
+                    @RenderBody()
+                   </section>
+            </div> 
+ 
+        <footer>
+            <div style="width: 100%">
+                <div align="center" style="font-size: 10px">
+                    <p> @Html.ActionLink("О нас", "About", "Home")   @Html.ActionLink("Контакты", "Contact", "Home")</p>
+                </div>
+                <div align="center" style="font-size:10px"><br/> &copy; @DateTime.Now.Year - www.carross.ru</div>
+              
+            </div>
+        </footer>
+
+        @Scripts.Render("~/bundles/jquery")
+       @RenderSection("scripts", required: false)
+        <script type='text/javascript'>
+            $(function() {
+                $('#mainTextBox').click(function() {
+                    var searchCode = document.getElementById('searchCode');
+                    if (searchCode != null) this.value = searchCode.innerHTML;
+                    else if ((this).value == 'Введите номер запчасти либо VIN код') (this).value = '';
+                });
+            });
+
+           
+        </script>
+         <script src="~/Scripts/AddTobasketscript.js"></script>
+          </body>
+</html>
